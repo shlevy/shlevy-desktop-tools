@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+nix-instantiate $@ | xargs nix-env --set --profile /nix/var/nix/profiles/per-user/$USER/envs
+setup-home

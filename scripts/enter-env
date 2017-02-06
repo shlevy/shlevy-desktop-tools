@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+if [ "$1x" = "-sx" ]; then
+  source=1
+  env=$2
+else
+  source=
+  env=$1
+fi
+env=/nix/var/nix/profiles/per-user/$USER/envs/$env
+export PATH=$env/bin:$env/sbin:$PATH
+if [ -f $env/etc/env-support ]; then
+  . $env/etc/env-support
+fi
+if [ -z "$source" ]; then
+  exec -a bash
+fi
