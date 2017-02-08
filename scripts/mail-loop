@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+while true; do
+    # Archive
+    notmuch search --output=files --format=text0 folder:INBOX '(not is:inbox)' | xargs --null --no-run-if-empty move-mail
+    # Delete
+    notmuch search --exclude=false --output=files --format=text0 tag:deleted | xargs --null --no-run-if-empty rm
+    # Sync
+    mbsync main
+    # Update
+    notmuch new
+    # Spam
+    notmuch tag +spam folder:Spam
+    sleep 2m
+done
