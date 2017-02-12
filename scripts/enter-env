@@ -7,11 +7,11 @@ else
   env=$1
 fi
 env=/nix/var/nix/profiles/per-user/$USER/envs/$env
-export PATH=$env/bin:$env/sbin:$PATH
-export EMACSLOADPATH=$env/share/emacs/site-lisp:
 if [ -f $env/etc/env-support ]; then
   . $env/etc/env-support
 fi
+export PATH=$env/bin:$env/sbin:$PATH
+export EMACSLOADPATH=$env/share/emacs/site-lisp:$EMACSLOADPATH
 export ACTIVE_NIX_ENV=$env
 export XDG_DATA_DIRS=$env/share:$XDG_DATA_DIRS
 if [ -z "$source" ]; then
