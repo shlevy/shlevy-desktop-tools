@@ -1,5 +1,6 @@
 #include <unistd.h>
 #include <X11/Xlib.h>
+#include <X11/XKBlib.h>
 #include <fcntl.h>
 #include <time.h>
 #include <stdio.h>
@@ -7,6 +8,7 @@
 int main(int argc, char ** argv) {
   Display * dpy = XOpenDisplay(NULL);
   Window w = DefaultRootWindow(dpy);
+  XkbStateRec st;
   int fd = open("/sys/class/power_supply/BAT0/capacity", O_RDONLY);
   while (1) {
     char buf[512];
@@ -21,8 +23,9 @@ int main(int argc, char ** argv) {
       return 1;
     }
 
-    buf[off + res - 1] = '%';
-    buf[off + res] = '\0';
+    XkbGetState(dpy, XkbUseCoreKbd, &st);
+    char * kbd = st.group == 0 ? "us" : "il";
+    sprintf(buf + off + res - 1, "%%  |  %s", kbd);
 
     XStoreName(dpy, w, buf);
     XFlush(dpy);
