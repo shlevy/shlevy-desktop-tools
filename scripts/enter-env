@@ -14,6 +14,8 @@ export PATH=$env/bin:$env/sbin:$PATH
 export EMACSLOADPATH=$env/share/emacs/site-lisp:$EMACSLOADPATH
 export ACTIVE_NIX_ENV=$env
 export XDG_DATA_DIRS=$env/share:$XDG_DATA_DIRS
+export PKG_CONFIG_PATH=$env/lib/pkgconfig:$PKG_CONFIG_PATH
+export ACLOCAL_PATH=$env/share/aclocal
 if [ -z "$source" ]; then
   exec -a bash
 fi
